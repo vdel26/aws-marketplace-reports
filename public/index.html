@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<head>
+  <title>Customer Subscriber Reports</title>
+  <link rel="stylesheet" href="client.css" />
+</head>
+<body>
+  <section class="main">
+    <h1 class="chart-title">Total users</h1>
+    <canvas id="mainChart" width="860" height="480"></canvas>
+  </section>
+  
+  <label class="select">
+    <select name="report-selector" id="report-selector">
+      <option selected disabled>available reports</option>
+    </select>
+  </label>
+
+  <section class="left">
+    <h1 class="chart-title">Signup date</h1>
+    <canvas id="leftChart" width="640" height="480"></canvas>
+  </section>
+  <section class="right">
+    <h1 class="chart-title">Last login date</h1>
+    <canvas id="rightChart" width="640" height="480"></canvas>
+  </section>
+
+
+  <script src="Chart.min.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

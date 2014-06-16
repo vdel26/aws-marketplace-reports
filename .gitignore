@@ -1,0 +1,4 @@
+customers/
+datasets/
+.DS_Store
+node_modules/

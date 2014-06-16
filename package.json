@@ -1,0 +1,24 @@
+{
+  "name": "AWSReports",
+  "version": "0.0.1",
+  "description": "A nicer way to read AWS Marketplace reports",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^0.9.0",
+    "http-auth": "^2.1.8",
+    "imap": "^0.8.10",
+    "mkdirp": "^0.5.0",
+    "node-static": "^0.7.3",
+    "request": "^2.36.0",
+    "split": "^0.3.0",
+    "underscore": "^1.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js",
+    "fetch": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Delgado",
+  "license": "ISC"
+}
