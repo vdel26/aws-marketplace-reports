@@ -42,7 +42,11 @@ Report.prototype.parseCsv = function (cb) {
     console.log('-------------------------')
     cb()
   }.bind(this))
-  // TODO: handle parsing error (can happen if AWS link has expired)
+
+  this.reader.addListener('error', function (err) {
+    // hack: this required patch in ya-csv to emit 'error' event
+    console.log('Error parsing report. Skipping report...')
+  })
 }
 
 

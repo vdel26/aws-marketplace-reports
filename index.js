@@ -1,5 +1,6 @@
 var Imap    = require('imap')
 var fs      = require('fs')
+var rm      = require('rimraf')
 var mkdirp  = require('mkdirp')
 var split   = require('split')
 var async   = require('async')
@@ -103,20 +104,27 @@ function downloadFile (url, callback) {
  * TASKS
  */
 async.waterfall([
+  // make sure customers/ and datasets/ exist
+  // and clean old csv reports
   function (callback) {
-    mkdirp('customers', function (err) {
+    rm('customers', function (err) {
       if (err) console.log(err)
-      mkdirp('datasets', function (err) {
+      mkdirp('customers', function (err) {
         if (err) console.log(err)
-        callback()
+        mkdirp('datasets', function (err) {
+          if (err) console.log(err)
+          callback()
+        })
       })
     })
   },
 
+  // search emails and extract URLs to AWS Marketplace reports
   function (callback) {
-    getUrls('Customer Subscriber Report', 'June 9, 2014', callback)
+    getUrls('Customer Subscriber Report', 'June 10, 2014', callback)
   },
 
+  // download reports to customers/
   function (urlsArray, callback) {
     async.each(urlsArray, downloadFile, function (err) {
       if (err) console.log('Error: ' + err)
@@ -125,6 +133,8 @@ async.waterfall([
     })
   },
 
+  // create json datasets from reports
+  // don't generate dataset if AWS URL has expired
   function (callback) {
     var csvFiles = fs.readdirSync('customers').map(function (file) {
       return 'customers/' + file
@@ -137,6 +147,7 @@ async.waterfall([
     }, callback)
   },
 
+  // create json dataset for the report of total daily users
   function (callback) {
     var datasets = fs.readdirSync('datasets').map(function (file) {
       return 'datasets/' + file
@@ -162,5 +173,3 @@ function (err) {
   console.log('DONE :)')
 })
 
-// TODO
-// 1. Don't overwrite previous reports if they exist
