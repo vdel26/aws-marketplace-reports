@@ -2,4 +2,5 @@ customers/
 datasets/
 backup/
 .DS_Store
+config.json
 node_modules/

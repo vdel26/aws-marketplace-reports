@@ -71,9 +71,6 @@
     var signupData = []
     var lastUsedData = []
 
-    // hide main chart
-//    ctxMain.parentElement.style.display = 'none'
-
     for (var i=0; i < signupList.length; i++) {
       signupLabels.push(signupList[i].date)
       signupData.push(signupList[i].amount)
@@ -117,10 +114,6 @@
         }
       ]
     }
-
-    // hide secondary charts
-//    ctxLeft.parentElement.style.display = 'none'
-//    ctxRight.parentElement.style.display = 'none'
 
     for (var i=0; i < rawData.length; i++) {
       data.labels.push(rawData[i].date)

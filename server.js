@@ -3,6 +3,7 @@ var static = require('node-static')
 var fs = require('fs')
 var path = require('path')
 var url = require('url')
+var fetch = require('./fetch')
 
 var file = new static.Server('./public')
 
