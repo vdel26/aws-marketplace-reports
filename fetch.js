@@ -7,7 +7,6 @@ var async   = require('async')
 var request = require('request')
 var Report  = require('./report')
 
-var lastFetchDate = require('./config.json').lastFetchDate
 
 var imap = module.exports = new Imap({
   user: process.env.GMAIL_EMAIL,
@@ -102,15 +101,6 @@ function downloadFile (url, callback) {
 }
 
 
-/**
- * write lastFetchDate to local config file
- */
-function updateFetchDate () {
-  var today = (new Date()).toDateString()
-  var json = JSON.stringify({lastFetchDate: today})
-  fs.writeFileSync('config.json', json)
-}
-
 
 /**
  * TASKS
@@ -187,22 +177,13 @@ function runTasks () {
     }
   ],
   function (err) {
-    updateFetchDate()
     console.log('DONE :)')
   })
 }
 
+module.exports = runTasks
 
-module.exports = function () {
-  var lastFetchDate = require('./config.json').lastFetchDate
-  var today = (new Date()).toDateString()
-  if (lastFetchDate !== today)
-    runTasks()
-  else
-    console.log("Reports are up-to-date")
-}
-
+// allow command line execution `npm run fetch`
 if (require.main === module) {
-    module.exports()
+  runTasks()
 }
-

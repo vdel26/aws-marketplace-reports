@@ -34,8 +34,14 @@ http.createServer(function (req, res) {
     })
   }
 
+  else if (req.method === 'GET' && /^\/webhook/.test(pathname)) {
+    fetch()
+    res.end()
+    return
+  }
+
   // client side static assets
-  else if (req.method == 'GET') {
+  else if (req.method === 'GET') {
     file.serve(req, res, function (err) {
       if (err) {
         res.writeHead(err.status, err.headers)
@@ -44,6 +50,4 @@ http.createServer(function (req, res) {
     })
   }
 
-}).listen(8000)
-
-console.log('server started at port: ' + 8000)
+}).listen(process.env.PORT || 8000)

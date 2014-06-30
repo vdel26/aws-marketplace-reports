@@ -8,6 +8,8 @@
   var rightChart = new Chart(ctxRight)
   var mainChart = new Chart(ctxMain)
 
+  var host = window.location.origin
+  
   // TODO
   // 1. a cache should be kept locally to avoid making a request for every
   // dataset change
@@ -55,7 +57,7 @@
   // get a list of available reports
   function getAvailableDatasets () {
     var req = new XMLHttpRequest()
-    req.open('GET', 'http://localhost:8000/datasets', true)
+    req.open('GET', host + '/datasets', true)
     req.onload = populateSelector
     req.send()
   }
@@ -132,7 +134,7 @@
   function onReportSelected (event) {
     var report = selector.selectedOptions[0].value
     var req = new XMLHttpRequest()
-    req.open('GET', 'http://localhost:8000/datasets/' + report, true)
+    req.open('GET', host + '/datasets/' + report, true)
 
     if (report === 'total_users_report.json')
       req.onload = generateTotalReport

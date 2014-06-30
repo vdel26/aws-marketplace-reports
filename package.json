@@ -12,7 +12,8 @@
     "request": "^2.36.0",
     "rimraf": "^2.2.8",
     "split": "^0.3.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "ya-csv": "^0.9.3"
   },
   "devDependencies": {},
   "scripts": {
