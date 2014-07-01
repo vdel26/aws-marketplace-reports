@@ -34,6 +34,7 @@ http.createServer(function (req, res) {
     })
   }
 
+  // receive zapier notifications and fetch new email reports
   else if (req.method === 'GET' && /^\/webhook/.test(pathname)) {
     fetch()
     res.end()

@@ -1,13 +1,56 @@
-.left, .right {
-  float: left;
+body {
+  font-family: Avenir, Helvetica;
+}
+h1, h2 {
+  color: rgb(44, 62, 80);
+}
+.chart-title {
+  color: #e74c3c;
+}
+a {
+  font-weight: 500;
+  color: rgba(151,187,205,1);
+}
+a:hover {
+  color: rgb(52, 152, 219);
+}
+header {
+  text-align: center;
+}
+
+
+/*
+ * Charts
+ */
+.charts {
+  margin-top: 2em;
+  text-align: center;
 }
 .main {
   display: block;
 }
-
-.chart-title {
-  font-family: Avenir, Helvetica;
+.left, .right {
+  display: inline-block;
 }
+
+/*
+ * More reports section
+ */
+.more-reports-selector {
+  margin: 2em 0;
+}
+.more-reports-title {
+  display: inline-block;
+  margin-right: 1em;
+}
+.more-reports {
+  margin-bottom: 3em;
+  display: none;
+}
+.more-reports.active {
+  display: block;
+}
+
 
 /*
  * Select
@@ -33,6 +76,7 @@
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+
 }
 /* Undo the Firefox inner focus ring */
 .select select:focus:-moz-focusring {
@@ -57,20 +101,20 @@
 }
 
 /* Hover state */
-/* Uncomment if you need it, but be aware of the sticky iOS states. */
 .select select:hover {
   background-color: #ddd;
 }
 
 /* Focus */
 .select select:focus {
-  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem rgba(151,187,205,1);
 }
 
 /* Active/open */
 .select select:active {
   color: #fff;
-  background-color: #0074d9;
+  /*background-color: #0074d9;*/
+  background-color: rgba(151,187,205,1);
 }
 
 /* Hide the arrow in IE10 and up */

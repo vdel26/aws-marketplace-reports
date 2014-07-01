@@ -9,15 +9,8 @@
   var mainChart = new Chart(ctxMain)
 
   var host = window.location.origin
-  
-  // TODO
-  // 1. a cache should be kept locally to avoid making a request for every
-  // dataset change
-  //
-  // 2. would possibly be a good idea to use a worker thread to fetch all the
-  // datasets at the beginning, so changes after that don't make additional requests
 
-  var dataLeft = {
+  var dataFormat = {
     labels : [],
     datasets : [
       {
@@ -30,17 +23,8 @@
     ]
   }
 
-  var dataRight = {
-    labels : [],
-    datasets : [
-      {
-        fillColor : "rgba(151,187,205,0.5)",
-        strokeColor : "rgba(151,187,205,1)",
-        pointColor : "rgba(151,187,205,1)",
-        pointStrokeColor : "#fff",
-        data : []
-      }
-    ]
+  function clone (target) {
+    return JSON.parse(JSON.stringify(target))
   }
 
   // create options in report selector
@@ -78,10 +62,13 @@
       signupData.push(signupList[i].amount)
     }
 
-    for (var i=0; i < lastUsedList.length; i++) {
-      lastUsedLabels.push(lastUsedList[i].date)
-      lastUsedData.push(lastUsedList[i].amount)
+    for (var j=0; j < lastUsedList.length; j++) {
+      lastUsedLabels.push(lastUsedList[j].date)
+      lastUsedData.push(lastUsedList[j].amount)
     }
+
+    var dataLeft = clone(dataFormat)
+    var dataRight = clone(dataFormat)
 
     dataLeft.labels = signupLabels
     dataLeft.datasets[0].data = signupData
@@ -96,26 +83,16 @@
     })
     rightChart.Bar(dataRight, {
       scaleOverride: true,
-      scaleSteps: 10,
+      scaleSteps: 15,
       scaleStepWidth: 1,
       scaleStartValue: 0
     })
   }
 
+
   function generateTotalReport () {
     var rawData = JSON.parse(this.responseText)
-    var data = {
-      labels : [],
-      datasets : [
-        {
-          fillColor : "rgba(151,187,205,0.5)",
-          strokeColor : "rgba(151,187,205,1)",
-          pointColor : "rgba(151,187,205,1)",
-          pointStrokeColor : "#fff",
-          data : []
-        }
-      ]
-    }
+    var data = clone(dataFormat)
 
     for (var i=0; i < rawData.length; i++) {
       data.labels.push(rawData[i].date)
@@ -124,7 +101,7 @@
 
     mainChart.Line(data, {
       scaleOverride: true,
-      scaleSteps: 22,
+      scaleSteps: 36,
       scaleStepWidth: 1,
       scaleStartValue: 10
     })
@@ -133,6 +110,8 @@
   // fetch report when selected from the list
   function onReportSelected (event) {
     var report = selector.selectedOptions[0].value
+    document.querySelector('.more-reports').classList.add('active');
+
     var req = new XMLHttpRequest()
     req.open('GET', host + '/datasets/' + report, true)
 
@@ -144,12 +123,17 @@
     req.send()
   }
 
-  // DEBUG
-  window.makeReq = getAvailableDatasets
-  window.data = dataLeft
+  // initialize
+  function initialize () {
+    selector.addEventListener('change', onReportSelected)
+    getAvailableDatasets()
 
-  // Initialize
-  selector.addEventListener('change', onReportSelected)
-  getAvailableDatasets()
+    var req = new XMLHttpRequest()
+    req.open('GET', host + '/datasets/total_users_report.json', true)
+    req.onload = generateTotalReport
+    req.send()
+  }
+
+  initialize()
 
 })(window, document, Chart);

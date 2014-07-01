@@ -6,26 +6,38 @@
   <link rel="stylesheet" href="client.css" />
 </head>
 <body>
-  <section class="main">
-    <h1 class="chart-title">Total users</h1>
-    <canvas id="mainChart" width="860" height="480"></canvas>
-  </section>
-  
-  <label class="select">
-    <select name="report-selector" id="report-selector">
-      <option selected disabled>available reports</option>
-    </select>
-  </label>
+  <header>
+    <h1>3scale AMI reports</h1>
+    <a href="https://aws.amazon.com/marketplace/pp/B00IIXFE5M" target="_blank">3scale AMI Marketplace listing</a>
+    <a href="https://aws.amazon.com/marketplace/management/" target="_blank">AWS Marketplace management portal</a>
+  </header>
 
-  <section class="left">
-    <h1 class="chart-title">Signup date</h1>
-    <canvas id="leftChart" width="640" height="480"></canvas>
-  </section>
-  <section class="right">
-    <h1 class="chart-title">Last login date</h1>
-    <canvas id="rightChart" width="640" height="480"></canvas>
-  </section>
+  <section class="charts">
+    <figure class="main">
+      <h1 class="chart-title">Total users</h1>
+      <canvas id="mainChart" width="860" height="480"></canvas>
+    </figure>
 
+    <div class="more-reports-selector">
+      <h2 class="more-reports-title">See more reports </h2>
+      <label class="select">
+        <select name="report-selector" id="report-selector">
+          <option selected disabled>available reports</option>
+        </select>
+      </label>
+    </div>
+
+    <section class="more-reports">
+      <figure class="left">
+        <h1 class="chart-title">Signup date</h1>
+        <canvas id="leftChart" width="640" height="480"></canvas>
+      </figure>
+      <figure class="right">
+        <h1 class="chart-title">Last login date</h1>
+        <canvas id="rightChart" width="640" height="480"></canvas>
+      </figure>
+    </section>
+  </section>
 
   <script src="Chart.min.js"></script>
   <script src="client.js"></script>
